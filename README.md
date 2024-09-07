@@ -2,11 +2,9 @@
 
 ![Badge em progresso](https://img.shields.io/badge/Status-Development-yellow)
 
-Trato Tech is a e-commerce web application built with React, Redux, and JavaScript, focused on selling technology products. The application allows users to browse through different categories of products, add them to their cart, and proceed to checkout. 
+Trato Tech is an e-commerce web application built with React, Redux, and JavaScript, focused on selling technology products. The application allows users to browse through different categories of products, add them to their cart, and proceed to checkout. It also provides functionality for managing the product inventory.
 
 ## Technologies Used:
-
-* **Front-end:**
    * React
    * Redux
    * JavaScript
@@ -18,6 +16,7 @@ Trato Tech is a e-commerce web application built with React, Redux, and JavaScri
 * **Product Browsing:** Users can easily browse through products categorized by Electronics, Automotive, Games, Stationery, and Sound & Vision.
 * **Shopping Cart:** Users can add products to their cart, update quantities, and remove items.
 * **Checkout Process:** A streamlined checkout process allows users to review their order and proceed to payment.
+* **Product Management:** Administrators can add new products, edit existing ones, and delete items from the inventory.
 
 
 ## Getting Started:
