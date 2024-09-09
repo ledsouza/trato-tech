@@ -44,4 +44,6 @@ export default async function criarTarefa({
             isClosable: true,
         });
     }
+
+    return resposta;
 }

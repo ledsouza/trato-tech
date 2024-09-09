@@ -2,17 +2,18 @@ import { createListenerMiddleware } from "@reduxjs/toolkit";
 import categoriasService from "services/categorias";
 import {
     adicionarTodasAsCategorias,
+    adicionarUmaCategoria,
     carregarCategorias,
     carregarUmaCategoria,
 } from "store/reducers/categorias";
 import criarTarefa from "./utils/criarTarefa";
 
-export const listener = createListenerMiddleware();
+export const listenerCategorias = createListenerMiddleware();
 
-listener.startListening({
+listenerCategorias.startListening({
     actionCreator: carregarCategorias,
     effect: async (action, { dispatch, fork, unsubscribe }) => {
-        await criarTarefa({
+        const resposta = await criarTarefa({
             fork,
             dispatch,
             action: adicionarTodasAsCategorias,
@@ -21,13 +22,33 @@ listener.startListening({
             textoSucesso: "Categorias carregadas com sucesso!",
             textoErro: "Erro na busca de categorias",
         });
-        unsubscribe();
+
+        if (resposta.status === "ok") {
+            unsubscribe();
+        }
     },
 });
 
-listener.startListening({
+listenerCategorias.startListening({
     actionCreator: carregarUmaCategoria,
-    effect: async () => {
-        console.log("carregar apenas uma categorias");
+    effect: async (action, { dispatch, fork, getState, unsubscribe }) => {
+        const { categorias } = getState();
+        const nomeCategoria = action.payload;
+        const categoriaCarregada = categorias.some(
+            (categoria) => categoria.id === nomeCategoria
+        );
+
+        if (categoriaCarregada) return;
+        if (categorias.length === 5) return unsubscribe();
+
+        await criarTarefa({
+            fork,
+            dispatch,
+            action: adicionarUmaCategoria,
+            busca: () => categoriasService.buscarUmaCategoria(nomeCategoria),
+            textoCarregando: "Carregando categorias",
+            textoSucesso: "Categorias carregadas com sucesso!",
+            textoErro: "Erro na busca de categorias",
+        });
     },
 });
